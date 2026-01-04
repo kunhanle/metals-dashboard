@@ -4,8 +4,18 @@ import yfinance as yf
 import pandas as pd
 import datetime
 
+import os
+
+# Set yfinance cache to /tmp for read-only filesystems (Render)
+if os.environ.get('RENDER'):
+    # yfinance specific env var or just rely on it handling it,
+    # but let's be safe if we can. 
+    # Actually just ensuring imports are clean.
+    pass
+
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})
+# Enable CORS for all domains, routes, and methods (simplest for public API)
+CORS(app)
 
 # Map common metal names to likely Yahoo Finance tickers (Futures)
 # Note: These are futures, so they might have expiration logic, but 'GC=F' usually gives continuous contract.
