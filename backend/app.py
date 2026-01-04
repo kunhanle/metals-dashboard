@@ -1,10 +1,15 @@
+import os
+
+# Fix for Render Read-Only Filesystem: Set cache dir to /tmp
+# This must correspond to where yfinance tries to write cache
+os.environ['XDG_CACHE_HOME'] = '/tmp/runtime-cache'
+os.environ['YFINANCE_CACHE_DIR'] = '/tmp/yfinance-cache' # Try both specific and generic
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import yfinance as yf
 import pandas as pd
 import datetime
-
-import os
 
 # Set yfinance cache to /tmp for read-only filesystems (Render)
 if os.environ.get('RENDER'):
